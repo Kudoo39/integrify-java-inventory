@@ -4,7 +4,7 @@ In this assignment, you will create a simple inventory management system which a
 
 ## Requirements
 
-## Level 1 - Mandatory
+## Level 1
 
 1. Create class `Item`, which has name (readonly), quantity, and created date, which are private. Amount of each item cannot be negative. Provide the following features:
 
@@ -37,14 +37,14 @@ Item umbrella = new Item("Umbrella", 5);
 Item sunscreen = new Item("Sunscreen", 8);
 ```
 
-## Level 2 - Extra feature: Capacity
+## Level 2
 
 Class `Store` should have the following features:
 
 - Maximum capacity, which is the total amount of items allowed in the store, and the constructor should also take an integer value as the maximum capacity of the inventory.
 - Modify the add method to not overload the capacity.
 
-## Level 3 - Extra feature: Complex functionalities
+## Level 3
 
 Class `Store` should have extra features
 
@@ -91,3 +91,30 @@ Class `Store` should have extra features
    - Shampoo, Created: 2023-09-01
    - Toothbrush, Created: 2023-10-01
   ```
+  
+## Level 4
+
+1. Create an `INotificationService` interface with a method `sendNotificationOnSuccess` and `sendNotificationOnFailure`.
+2. Create two different notification service implementations: `EmailNotificationService` and `SMSNotificationService`.
+  - EmailNotificationService implementation:
+    - `sendNotificationOnSuccess`: Sends a comprehensive email, including action details, a summary of the item, user feedback instructions, and a support contact. For example, "Hello, a new item titled 'XYZ' has been successfully added to the inventory. If you have any queries or feedback, please contact our support team at support@inventory.com."
+    - `sendNotificationOnFailure`: Provides a detailed error report, troubleshooting steps, and a link to an FAQ or help page. E.g., "We encountered an issue adding 'ABC'. Please review the input data. For more help, visit our FAQ at inventory.com/faq."
+  - SMSNotificationService Implementation:
+    - `sendNotificationOnSuccess`: Sends a brief SMS with action confirmation and a short status update. E.g., "Item 'XYZ' added to inventory. Thank you!"
+    - `sendNotificationOnFailure`: Provides a short error notice and a suggestion to contact support via a different channel. E.g., "Error adding item 'ABC'. Please email support@inventory.com."
+3. Inject `INotificationService` into the `Store` class. Send notifications on adding or deleting an item.
+4. We will have 2 inventories, using different implementation of notification service. Use all the features above in `Program.java`.
+
+   ```java
+   public class Program {
+       public static void main(String[] args) {
+           INotificationService emailService = new EmailNotificationService();
+           INotificationService smsService = new SMSNotificationService();
+
+           Inventory storeWithEmail = new Store(emailService);
+           Inventory storeWithSMS = new Store(smsService);
+
+           // Demonstrate adding/removing items in each inventory and observe notifications
+       }
+   }
+   ```
