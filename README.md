@@ -114,7 +114,7 @@ Class `Store` should have extra features
            Store storeWithEmail = new Store(emailService);
            Store storeWithSMS = new Store(smsService);
 
-           // Demonstrate adding/removing items in each inventory and observe notifications
+           // Demonstrate adding/removing items in each store and observe notifications
        }
    }
    ```
