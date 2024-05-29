@@ -111,8 +111,8 @@ Class `Store` should have extra features
            INotificationService emailService = new EmailNotificationService();
            INotificationService smsService = new SMSNotificationService();
 
-           Inventory storeWithEmail = new Store(emailService);
-           Inventory storeWithSMS = new Store(smsService);
+           Store storeWithEmail = new Store(emailService);
+           Store storeWithSMS = new Store(smsService);
 
            // Demonstrate adding/removing items in each inventory and observe notifications
        }
