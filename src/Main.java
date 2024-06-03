@@ -3,6 +3,8 @@ import services.Store;
 import util.SortOrder;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,8 +20,12 @@ public class Main {
         store.addItem((coffee));
         store.addItem((milk));
 
-        System.out.println(store.getCurrentVolume());
-        store.sortByDate(SortOrder.DESC);
-        store.displayItems();
+        Map<String, List<Item>> groupByDate = store.groupByDate();
+        for (Map.Entry<String, List<Item>> group : groupByDate.entrySet()) {
+            System.out.println(group.getKey() + " Items:");
+            for (Item item : group.getValue()) {
+                System.out.println(" - " + item.getName() + ", Created: " + item.getDate().toString());
+            }
+        }
     }
 }

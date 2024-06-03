@@ -3,10 +3,8 @@ package services;
 import model.Item;
 import util.SortOrder;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 public class Store {
     private List<Item> items;
@@ -62,6 +60,29 @@ public class Store {
             Collections.sort(items, Comparator.comparing(Item::getDate).reversed());
         }
         return items;
+    }
+
+    public Map<String, List<Item>> groupByDate() {
+        Map<String, List<Item>> groupItems = new HashMap<>();
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDate threeMonthsDate = currentDate.minusMonths(3);
+
+        List<Item> newArrivals = new ArrayList<>();
+        List<Item> oldItems = new ArrayList<>();
+
+        for (Item item : items) {
+            if (item.getDate().isAfter(threeMonthsDate) || item.getDate().isEqual(threeMonthsDate)) {
+                newArrivals.add(item);
+            } else {
+                oldItems.add(item);
+            }
+        }
+
+        groupItems.put("New Arrival", newArrivals);
+        groupItems.put("Old", oldItems);
+
+        return groupItems;
     }
 
     public void displayItems() {
