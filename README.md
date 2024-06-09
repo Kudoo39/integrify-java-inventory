@@ -6,7 +6,7 @@ In this assignment, you will create a simple inventory management system which a
 
 ## Level 1
 
-1. Create class `model.Item`, which has name (readonly), quantity, and created date, which are private. Amount of each item cannot be negative. Provide the following features:
+1. Create class `domain.entities.Item`, which has name (readonly), quantity, and created date, which are private. Amount of each item cannot be negative. Provide the following features:
 
 - Constructor to take parameters of name, quantity, and created date (optional, if not set, it will be current date).
 
@@ -20,21 +20,21 @@ In this assignment, you will create a simple inventory management system which a
 
 ```java
 // items example - You do not need to follow exactly the same
-model.Item waterBottle = new model.Item("Water Bottle", 10, LocalDate.of(2023, 1, 1));
-model.Item chocolateBar = new model.Item("Chocolate Bar", 15, LocalDate.of(2023, 2, 1));
-model.Item notebook = new model.Item("Notebook", 5, LocalDate.of(2023, 3, 1));
-model.Item pen = new model.Item("Pen", 20, LocalDate.of(2023, 4, 1));
-model.Item tissuePack = new model.Item("Tissue Pack", 30, LocalDate.of(2023, 5, 1));
-model.Item chipsBag = new model.Item("Chips Bag", 25, LocalDate.of(2023, 6, 1));
-model.Item sodaCan = new model.Item("Soda Can", 8, LocalDate.of(2023, 7, 1));
-model.Item soap = new model.Item("Soap", 12, LocalDate.of(2023, 8, 1));
-model.Item shampoo = new model.Item("Shampoo", 40, LocalDate.of(2023, 9, 1));
-model.Item toothbrush = new model.Item("Toothbrush", 50, LocalDate.of(2023, 10, 1));
-model.Item coffee = new model.Item("Coffee", 20);
-model.Item sandwich = new model.Item("Sandwich", 15);
-model.Item batteries = new model.Item("Batteries", 10);
-model.Item umbrella = new model.Item("Umbrella", 5);
-model.Item sunscreen = new model.Item("Sunscreen", 8);
+domain.entities.Item waterBottle = new domain.entities.Item("Water Bottle", 10, LocalDate.of(2023, 1, 1));
+domain.entities.Item chocolateBar = new domain.entities.Item("Chocolate Bar", 15, LocalDate.of(2023, 2, 1));
+domain.entities.Item notebook = new domain.entities.Item("Notebook", 5, LocalDate.of(2023, 3, 1));
+domain.entities.Item pen = new domain.entities.Item("Pen", 20, LocalDate.of(2023, 4, 1));
+domain.entities.Item tissuePack = new domain.entities.Item("Tissue Pack", 30, LocalDate.of(2023, 5, 1));
+domain.entities.Item chipsBag = new domain.entities.Item("Chips Bag", 25, LocalDate.of(2023, 6, 1));
+domain.entities.Item sodaCan = new domain.entities.Item("Soda Can", 8, LocalDate.of(2023, 7, 1));
+domain.entities.Item soap = new domain.entities.Item("Soap", 12, LocalDate.of(2023, 8, 1));
+domain.entities.Item shampoo = new domain.entities.Item("Shampoo", 40, LocalDate.of(2023, 9, 1));
+domain.entities.Item toothbrush = new domain.entities.Item("Toothbrush", 50, LocalDate.of(2023, 10, 1));
+domain.entities.Item coffee = new domain.entities.Item("Coffee", 20);
+domain.entities.Item sandwich = new domain.entities.Item("Sandwich", 15);
+domain.entities.Item batteries = new domain.entities.Item("Batteries", 10);
+domain.entities.Item umbrella = new domain.entities.Item("Umbrella", 5);
+domain.entities.Item sunscreen = new domain.entities.Item("Sunscreen", 8);
 ```
 
 ## Level 2
@@ -53,7 +53,7 @@ Class `service.Store` should have extra features
    // method invocation example - You do not need to follow exactly the same
   service.Store store = new service.Store(300);
   // ... add all items to the store
-  List<model.Item> collectionSortedByDate = store.sortByDate(SortOrder.DESC);
+  List<domain.entities.Item> collectionSortedByDate = store.sortByDate(SortOrder.DESC);
   // print all items
   ...
   ```
@@ -63,10 +63,10 @@ Class `service.Store` should have extra features
   // method invocation example - You do not need to follow exactly the same
   service.Store store = new service.Store(300);
   // ... add all items to the store
-  Map<String, List<model.Item>> groupByDate = store.groupByDate();
-  for (Map.Entry<String, List<model.Item>> group : groupByDate.entrySet()) {
+  Map<String, List<domain.entities.Item>> groupByDate = store.groupByDate();
+  for (Map.Entry<String, List<domain.entities.Item>> group : groupByDate.entrySet()) {
       System.out.println(group.getKey() + " Items:");
-      for (model.Item item : group.getValue()) {
+      for (domain.entities.Item item : group.getValue()) {
           System.out.println(" - " + item.getName() + ", Created: " + item.getCreatedDate().toString());
       }
   }
@@ -100,7 +100,7 @@ Class `service.Store` should have extra features
     - `sendNotificationOnSuccess`: Sends a comprehensive email, including action details, a summary of the item, user feedback instructions, and a support contact. For example, "Hello, a new item titled 'XYZ' has been successfully added to the inventory. If you have any queries or feedback, please contact our support team at support@inventory.com."
     - `sendNotificationOnFailure`: Provides a detailed error report, troubleshooting steps, and a link to an FAQ or help page. E.g., "We encountered an issue adding 'ABC'. Please review the input data. For more help, visit our FAQ at inventory.com/faq."
   - SMSNotificationService Implementation:
-    - `sendNotificationOnSuccess`: Sends a brief SMS with action confirmation and a short status update. E.g., "model.Item 'XYZ' added to inventory. Thank you!"
+    - `sendNotificationOnSuccess`: Sends a brief SMS with action confirmation and a short status update. E.g., "domain.entities.Item 'XYZ' added to inventory. Thank you!"
     - `sendNotificationOnFailure`: Provides a short error notice and a suggestion to contact support via a different channel. E.g., "Error adding item 'ABC'. Please email support@inventory.com."
 3. Inject `INotificationService` into the `service.Store` class. Send notifications on adding or deleting an item.
 4. We will have 2 inventories, using different implementation of notification service. Use all the features above in `Program.java`.

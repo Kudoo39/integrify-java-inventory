@@ -1,4 +1,4 @@
-package util;
+package domain.enums;
 
 public enum SortOrder {
     ASC,

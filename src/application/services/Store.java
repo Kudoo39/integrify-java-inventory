@@ -1,34 +1,41 @@
-package services;
+package application.services;
 
-import model.Item;
-import util.SortOrder;
+import domain.abstractions.INotificationService;
+import domain.entities.Item;
+import domain.enums.SortOrder;
 
 import java.time.LocalDate;
 import java.util.*;
 
 public class Store {
+    private INotificationService notificationService;
     private List<Item> items;
     private int capacity;
 
-    public Store(int capacity) {
+    public Store(int capacity, INotificationService notificationService) {
         this.items = new ArrayList<>();
         this.capacity = capacity;
+        this.notificationService = notificationService;
     }
 
     public void addItem(Item item) {
         if (findItemByName(item.getName()) == null) {
             if (getCurrentVolume() + item.getQuantity() <= capacity) {
                 items.add(item);
+                notificationService.sendNotificationOnSuccess(item, "added to");
             } else {
                 System.out.println("Cannot add " + item.getName() + ", please upgrade your storage!");
+                notificationService.sendNotificationOnFailure(item, "adding");
             }
         } else {
             System.out.println(item.getName() + " is already existed!");
+            notificationService.sendNotificationOnFailure(item, "adding");
         }
     }
 
     public void remove(Item item) {
         items.remove(item);
+        notificationService.sendNotificationOnSuccess(item, "removed from");
     }
 
    public int getCurrentVolume() {
