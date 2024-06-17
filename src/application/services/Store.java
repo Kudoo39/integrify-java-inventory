@@ -19,18 +19,22 @@ public class Store {
     }
 
     public void addItem(Item item) {
-        if (findItemByName(item.getName()) == null) {
-            if (getCurrentVolume() + item.getQuantity() <= capacity) {
-                items.add(item);
-                notificationService.sendNotificationOnSuccess(item, "added to");
-            } else {
-                System.out.println("Cannot add " + item.getName() + ", please upgrade your storage!");
-                notificationService.sendNotificationOnFailure(item, "adding");
-            }
-        } else {
+        boolean isItemUnique = findItemByName(item.getName()) == null;
+        if (!isItemUnique) {
             System.out.println(item.getName() + " is already existed!");
             notificationService.sendNotificationOnFailure(item, "adding");
+            return;
         }
+
+        boolean isFull = getCurrentVolume() + item.getQuantity() <= capacity;
+        if (!isFull) {
+            System.out.println("Cannot add " + item.getName() + ", please upgrade your storage!");
+            notificationService.sendNotificationOnFailure(item, "adding");
+            return;
+        }
+
+        items.add(item);
+        notificationService.sendNotificationOnSuccess(item, "added to");
     }
 
     public void remove(Item item) {
